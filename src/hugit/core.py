@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 """Core code."""
 
 from rich._loop import loop_last
@@ -44,35 +43,3 @@ def print_table_from_frequency_dict(frequency_dict: dict, sort_by_value=True):
 #         identical_ok=True,
 #         token=token,
 #     )
-=======
-import mimetypes
-from pathlib import Path
-from typing import List
-from typing import Set
-
-
-image_extensions: Set[str] = {
-    k for k, v in mimetypes.types_map.items() if v.startswith("image/")
-}
-
-
-# def check_image_opens(fname: Path):
-#     try:
-#         Image.open(fname)
-#         return True
-#     except UnidentifiedImageError:
-#         return False
-
-
-def get_images(directory: Path) -> List[Path]:
-    image_files = []
-    files = Path(directory).rglob("*")
-    for file in files:
-        if file.suffix in image_extensions:
-            image_files.append(file)
-    return image_files
-
-
-def get_image_label_from_folder(fpath: Path) -> str:
-    return fpath.parts[-2]
->>>>>>> Stashed changes
