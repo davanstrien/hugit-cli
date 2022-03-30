@@ -23,9 +23,3 @@ def test_print_frequency_dict():
     freqs = {"A": 100, "B": 200}
     core.print_table_from_frequency_dict(freqs)
     core.print_table_from_frequency_dict(freqs, sort_by_value=True)
-
-
-def test_get_images(image_files) -> None:
-    """Test for image files."""
-    files = core.get_images(image_files)
-    assert files
