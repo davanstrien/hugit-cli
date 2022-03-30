@@ -124,8 +124,7 @@ Options:
 
 ## Contributing
 
-This is _very_ early and might only be useful for our specfic use case. With that said if you have suggestions please open an issue.
-To learn more, see the [Contributor Guide].
+It is likely that _Hugit_ may only work for our particular workflow. With that said if you have suggestions please open an issue.
 
 ## License
 
