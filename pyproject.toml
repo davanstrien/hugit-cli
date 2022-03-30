@@ -24,6 +24,7 @@ attrs = "^21.4.0"
 typing-extensions = "^4.1.1"
 typed-settings = "^1.0.0"
 datasets = "^2.0.0"
+click = "^8.1.0"
 
 [tool.poetry.dev-dependencies]
 Pygments = ">=2.10.0"
