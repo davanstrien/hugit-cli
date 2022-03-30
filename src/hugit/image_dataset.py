@@ -1,4 +1,4 @@
-"""Datasets."""
+"""Image dataset."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -16,7 +16,7 @@ from hugit import core
 
 
 def resize_image(image: Image, size: int = 224) -> Image:
-    """Resizes an image retaining the aspect ratio"""
+    """Resizes an image retaining the aspect ratio."""
     w, h = image.size
     if w > h:
         height_percent = size / float(h)
@@ -89,22 +89,14 @@ class ImageDataset:
         return frequencies_dict
 
     def resize_images(self, size=448, writer_batch_size=8):
-        """Resizes images to `size` with `writer_batch_size`"""
-        # def _resize(example):
-        #     return {"image": self._thumbnail_image(example["image"], max_size=size)}
-
+        """Resizes images to `size` with `writer_batch_size`."""
         self.dataset = self.dataset.map(
             lambda example: {"image": resize_image(example["image"])},
             writer_batch_size=writer_batch_size,
         )
 
-    # def _thumbnail_image(self, image: Image, max_size: int = 448):
-    #     copy = image.copy()
-    #     copy.thumbnail((max_size, max_size), ANTIALIAS)
-    #     return copy
-
     def push_to_hub(self, repo_id: str) -> None:  # pragma: no cover
-        """Push dataset to hub at `repo_id`"""
+        """Push dataset to hub at `repo_id`."""
         self.dataset.push_to_hub(
             repo_id=repo_id, private=True, embed_external_files=True
         )
@@ -112,7 +104,7 @@ class ImageDataset:
 
 @ts.settings
 class Settings:
-    """A container for settings"""
+    """A container for settings."""
 
     repo_id: str = ts.option(help="Repo id for the Hugging Face Hub")
     private: bool = ts.option(
@@ -149,7 +141,7 @@ class Settings:
 def load_image_dataset(
     settings, directory, test_directory, valid_directory, train_directory
 ):
-    """Load an ImageFolder style dataset"""
+    """Load an ImageFolder style dataset."""
     print(settings)
     dataset = ImageDataset.from_image_directory(
         directory,
