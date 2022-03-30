@@ -1,0 +1,13 @@
+{
+  "_template": "gh:cjolowicz/cookiecutter-hypermodern-python",
+  "author": "Daniel van Strien",
+  "copyright_year": "2022",
+  "development_status": "Development Status :: 2 - Pre-Alpha",
+  "email": "davanstrien@gmail.com",
+  "friendly_name": "Hugit Cli",
+  "github_user": "davanstrien",
+  "license": "MIT",
+  "package_name": "hugit",
+  "project_name": "hugit-cli",
+  "version": "0.0.0"
+}

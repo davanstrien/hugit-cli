@@ -1,0 +1,3 @@
+[tool.huggit]
+do_resize = true
+size = 224
