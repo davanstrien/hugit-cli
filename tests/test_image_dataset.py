@@ -87,3 +87,21 @@ def test_resize_image():
     w, h = resized.size
     assert w == 224
     assert h == 224
+
+
+def test_resize_image_not_square():
+    """It resizes images"""
+    w, h = 250, 512
+    image = create_image(w, h)
+    resized = image_dataset.resize_image(image, size=224)
+    assert resized
+    assert isinstance(resized, Image.Image)
+    w, h = resized.size
+    assert w == 224
+    w, h = 512, 250
+    image = create_image(w, h)
+    resized = image_dataset.resize_image(image, size=224)
+    assert resized
+    assert isinstance(resized, Image.Image)
+    w, h = resized.size
+    assert h == 224

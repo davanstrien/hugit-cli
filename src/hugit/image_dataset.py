@@ -18,6 +18,10 @@ from hugit import core
 def resize_image(image: Image, size: int = 224) -> Image:
     """Resizes an image retaining the aspect ratio."""
     w, h = image.size
+    if w == h:
+        image = image.resize((size, size), ANTIALIAS)
+        return image
+
     if w > h:
         height_percent = size / float(h)
         width_size = int(float(w) * float(height_percent))
@@ -27,9 +31,6 @@ def resize_image(image: Image, size: int = 224) -> Image:
         width_percent = size / float(w)
         height_size = int(float(w) * float(width_percent))
         image = image.resize((size, height_size), ANTIALIAS)
-        return image
-    if w == h:
-        image = image.resize((size, size), ANTIALIAS)
         return image
 
 
@@ -142,7 +143,6 @@ def load_image_dataset(
     settings, directory, test_directory, valid_directory, train_directory
 ):
     """Load an ImageFolder style dataset."""
-    print(settings)
     dataset = ImageDataset.from_image_directory(
         directory,
         train_dir=train_directory,
