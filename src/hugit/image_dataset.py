@@ -141,7 +141,7 @@ class Settings:
 )
 def load_image_dataset(
     settings, directory, test_directory, valid_directory, train_directory
-):
+) -> None:
     """Load an ImageFolder style dataset."""
     dataset = ImageDataset.from_image_directory(
         directory,
@@ -156,7 +156,3 @@ def load_image_dataset(
     if settings.do_resize:
         dataset.resize_images(size=settings.size)
     dataset.push_to_hub(repo_id=settings.repo_id)
-
-
-if __name__ == "__main__":
-    load_image_dataset()  # pragma: no cover
