@@ -201,14 +201,17 @@ def xdoctest(session: Session) -> None:
     session.run("python", "-m", "xdoctest", *args)
 
 
-@session(name="docs-build", python=python_versions[0])
+@session(name="docs-build", python=python_versions[1])
 def docs_build(session: Session) -> None:
     """Build the documentation."""
+    session.install(".")
+    session.install("cogapp")
+    args = ["-r", "README.md"]
+    session.run("cog", *args)
     args = session.posargs or ["docs", "docs/_build"]
     if not session.posargs and "FORCE_COLOR" in os.environ:
         args.insert(0, "--color")
 
-    session.install(".")
     session.install("sphinx", "sphinx-click", "furo", "myst-parser")
 
     build_dir = Path("docs", "_build")
