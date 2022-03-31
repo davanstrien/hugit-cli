@@ -1,4 +1,4 @@
-"""Console."""
+"""Hugit Console."""
 from rich.console import Console
 
 
