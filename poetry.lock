@@ -1273,18 +1273,6 @@ docs = ["click (>=7,<9)", "furo", "sphinx", "sphinx-autodoc-typehints"]
 lint = ["click (>=7,<9)", "bandit (<1.7.3)", "flake8", "flake8-bandit", "flake8-black", "flake8-bugbear", "flake8-isort", "mypy", "types-toml"]
 
 [[package]]
-name = "typeguard"
-version = "2.13.3"
-description = "Run-time type checker for Python"
-category = "dev"
-optional = false
-python-versions = ">=3.5.3"
-
-[package.extras]
-doc = ["sphinx-rtd-theme", "sphinx-autodoc-typehints (>=1.2.0)"]
-test = ["pytest", "typing-extensions", "mypy"]
-
-[[package]]
 name = "typing-extensions"
 version = "4.1.1"
 description = "Backported and Experimental Type Hints for Python 3.6+"
@@ -1380,7 +1368,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7 <4.0.0"
-content-hash = "cec3b7cb03befefc6670f076377323bf52666447df10348e3d22f50f1231f337"
+content-hash = "1acdf7ebe1e3f0de888e6a9114cfb0573ed649f4d7b63ecbf213d3782fbada2c"
 
 [metadata.files]
 aiohttp = [
@@ -2326,10 +2314,6 @@ typed-ast = [
 typed-settings = [
     {file = "typed-settings-1.0.0.tar.gz", hash = "sha256:73e88e6f517cfbd22845bc293137720df38f5b6644a38c430256f32c0c6049f9"},
     {file = "typed_settings-1.0.0-py3-none-any.whl", hash = "sha256:3778e28c8043233bbfa1e8faa019fee8973f905cee99008eea4a223b86a32191"},
-]
-typeguard = [
-    {file = "typeguard-2.13.3-py3-none-any.whl", hash = "sha256:5e3e3be01e887e7eafae5af63d1f36c849aaa94e3a0112097312aabfa16284f1"},
-    {file = "typeguard-2.13.3.tar.gz", hash = "sha256:00edaa8da3a133674796cf5ea87d9f4b4c367d77476e185e80251cc13dfbb8c4"},
 ]
 typing-extensions = [
     {file = "typing_extensions-4.1.1-py3-none-any.whl", hash = "sha256:21c85e0fe4b9a155d0799430b0ad741cdce7e359660ccbd8b530613e8df88ce2"},
