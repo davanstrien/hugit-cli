@@ -24,7 +24,7 @@ def print_table_from_frequency_dict(frequency_dict: dict, sort_by_value=True):
             table.add_row(label, str(count), f"{percent*100}%", end_section=True)
             table.add_row("Total", str(total), f"{round(sum(percents)*100)}%")
         else:
-            table.add_row(label, str(count), f"{percent*100}%")
+            table.add_row(label, str(count), f"{round(percent*100,)}%")
 
     console.print(table)
 
