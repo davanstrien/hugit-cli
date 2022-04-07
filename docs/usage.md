@@ -1,6 +1,57 @@
-# Usage
+# Tutorial
 
-## Loading a local dataset to the 🤗 hub
+## Pushing a local dataset to the 🤗 hub
+
+We can upload an ImageFolder style dataset to the hub directly using `hugit`. An ImageFolder dataset is where the labels are encoded in the part of the folder structure. This often looks something like:
+
+```
+data/
+    Dog/
+        Image1.jpg
+    Cat/
+        Image1.jpg
+```
+
+Where `dog` and `cat` refer to the label of the images contained witin that folder. This type of folder structure is often used for sharing machine learning datasets. It is also one of the possible output formats we might have from an annotation tool. To upload our local data from our machine (or server) to the Hugging Face hub.
+
+Let's have a look at the help for the `push_image_dataset` command.
+
+<!-- [[[cog
+import cog
+from hugit import cli
+from click.testing import CliRunner
+runner = CliRunner()
+result = runner.invoke(cli.cli, ["push_image_dataset", "--help"])
+help = result.output.replace("Usage: cli", "Usage: hugit")
+cog.out(
+    "```\n{}\n```".format(help)
+)
+]]] -->
+
+```
+Usage: hugit push_image_dataset [OPTIONS] DIRECTORY
+
+  Load an ImageFolder style dataset.
+
+Options:
+  --train-directory TEXT        Name of train directory
+  --valid-directory TEXT        name of valid directory
+  --test-directory TEXT         name of test directory
+  --repo-id TEXT                Repo id for the Hugging Face Hub  [required]
+  --private / --no-private      Whether to keep dataset private on the Hub
+                                [default: private]
+  --do-resize / --no-do-resize  Whether to resize images before upload
+                                [default: do-resize]
+  --size INTEGER                Size to resize image. This will be used on the
+                                shortest side of the image i.e. the aspect rato
+                                will be maintained  [default: 224]
+  --help                        Show this message and exit.
+
+```
+
+<!-- [[[end]]] -->
+
+As you can see we have to pass `hugit` some required arguments and some options.
 
 ```bash
 hugit load_image_dataset cifar10 --repo-id davanstrin/cifar10
