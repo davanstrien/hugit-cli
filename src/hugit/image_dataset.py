@@ -2,14 +2,17 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
 import click
+import datasets
 import typed_settings as ts
 from attrs import define
 from datasets import load_dataset
 from datasets.dataset_dict import DatasetDict
+from PIL import Image
+from PIL import UnidentifiedImageError
 from PIL.Image import ANTIALIAS
-from PIL.Image import Image
 from toolz import itertoolz
 
 from hugit import core
@@ -34,6 +37,17 @@ def resize_image(image: Image, size: int = 224) -> Image:
         return image
 
 
+def filter_bad_images(x: dict[Any]) -> bool:
+    """Checks if pillow can open an image"""
+    im = x["image"]["path"]
+    print(im)
+    try:
+        Image.open(im)
+        return True
+    except UnidentifiedImageError:
+        return False
+
+
 @define
 class ImageDataset:
     """ImageDataset container."""
@@ -49,10 +63,11 @@ class ImageDataset:
         train_dir: Path | None = None,
         valid_dir: Path | None = None,
         test_dir: Path | None = None,
+        check_for_corrupt_images: bool = True,
     ):
         """Intilize an ImageDataset from a ImageFolder style dataset."""
         data_files = {}
-        if train_dir is not None:
+        if train_dir:
             train_files = directory / Path(train_dir)
             data_files["train"] = f"{train_files}/**/*"
         if valid_dir is not None:
@@ -75,6 +90,10 @@ class ImageDataset:
                 label2id = {v: k for k, v in id2label.items()}
                 label2ids[split] = label2id
                 id2labels[split] = id2label
+            if check_for_corrupt_images:
+                ds = ds.cast_column("image", datasets.Image(decode=False))
+                ds = ds.filter(filter_bad_images)
+                ds = ds.cast_column("image", datasets.Image())
             return cls(ds, label2ids, id2labels)
 
     @property
@@ -94,6 +113,7 @@ class ImageDataset:
         self.dataset = self.dataset.map(
             lambda example: {"image": resize_image(example["image"])},
             writer_batch_size=writer_batch_size,
+            num_proc=4,
         )
 
     def push_to_hub(self, repo_id: str) -> None:  # pragma: no cover
@@ -120,16 +140,18 @@ class Settings:
         This will be used on the shortest side of the image
         i.e. the aspect rato will be maintained""",
     )
+    train_directory: str = (
+        ts.option(
+            default=None, help="name of the directory containing the training split"
+        ),
+    )
 
 
-@click.command(name="load_image_dataset")
+@click.command(name="push_image_dataset")
 @click.argument(
     "directory",
     type=click.Path(exists=True, dir_okay=True, readable=True, resolve_path=True),
 )
-@click.option("--train-directory", help="Name of train directory", type=str)
-@click.option("--valid-directory", help="name of valid directory", type=str)
-@click.option("--test-directory", help="name of test directory", type=str)
 @ts.click_options(
     Settings,
     ts.default_loaders(
@@ -139,20 +161,23 @@ class Settings:
         env_prefix=None,
     ),
 )
-def load_image_dataset(
-    settings, directory, test_directory, valid_directory, train_directory
-) -> None:
+def load_image_dataset(settings, directory) -> None:
     """Load an ImageFolder style dataset."""
+    if settings.train_directory == "None":
+        train_directory = None
+    else:
+        train_directory = settings.train_directory
     dataset = ImageDataset.from_image_directory(
         directory,
         train_dir=train_directory,
-        test_dir=test_directory,
-        valid_dir=valid_directory,
+        test_dir=None,
+        valid_dir=None,
     )
     label_freqs = dataset.label_frequencies
     for split_name, label_freq in label_freqs.items():
         print(split_name)
         core.print_table_from_frequency_dict(frequency_dict=label_freq)
     if settings.do_resize:
+        print("resizing")
         dataset.resize_images(size=settings.size)
     dataset.push_to_hub(repo_id=settings.repo_id)
