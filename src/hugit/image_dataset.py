@@ -64,6 +64,7 @@ class ImageDataset:
         valid_dir: Path | None = None,
         test_dir: Path | None = None,
         check_for_corrupt_images: bool = True,
+        preserve_file_path: bool = False,
     ):
         """Intilize an ImageDataset from a ImageFolder style dataset."""
         data_files = {}
@@ -94,6 +95,9 @@ class ImageDataset:
                 ds = ds.cast_column("image", datasets.Image(decode=False))
                 ds = ds.filter(filter_bad_images)
                 ds = ds.cast_column("image", datasets.Image())
+            if preserve_file_path:
+                ds = ds.map(lambda example: {"fpath": example["image"].filename})
+
             return cls(ds, label2ids, id2labels)
 
     @property
@@ -140,10 +144,8 @@ class Settings:
         This will be used on the shortest side of the image
         i.e. the aspect rato will be maintained""",
     )
-    train_directory: str = (
-        ts.option(
-            default=None, help="name of the directory containing the training split"
-        ),
+    preserve_file_path: bool = ts.option(
+        default=True, help="preserve_orginal_file_path"
     )
 
 
@@ -163,15 +165,18 @@ class Settings:
 )
 def load_image_dataset(settings, directory) -> None:
     """Load an ImageFolder style dataset."""
-    if settings.train_directory == "None":
-        train_directory = None
-    else:
-        train_directory = settings.train_directory
+    print(settings)
+    # if settings.train_directory == "None":
+    #     train_directory = None
+    # else:
+    #     train_directory = settings.train_directory
+    train_directory = None
     dataset = ImageDataset.from_image_directory(
         directory,
         train_dir=train_directory,
         test_dir=None,
         valid_dir=None,
+        preserve_file_path=True,
     )
     label_freqs = dataset.label_frequencies
     for split_name, label_freq in label_freqs.items():
