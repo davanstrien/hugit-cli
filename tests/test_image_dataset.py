@@ -50,14 +50,13 @@ def test_imagedataset(image_directory):
     assert isinstance(dataset.label_frequencies, dict)
     freqs = dataset.label_frequencies
     freqs = freqs["train"]
-    assert len(set(freqs.keys()).difference({"dog", "cat", "monkey"})) == 0
+    assert not set(freqs.keys()).difference({"dog", "cat", "monkey"})
 
 
 def create_image(w, h):
     """Create an image for testing"""
     data = np.zeros((h, w, 3), dtype=np.uint8)
-    image = Image.fromarray(data, "RGB")
-    return image
+    return Image.fromarray(data, "RGB")
 
 
 test_images = [((224, 224), (224, 224)), ((512, 512), (512, 512))]
