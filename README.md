@@ -22,6 +22,8 @@
 [pre-commit]: https://github.com/pre-commit/pre-commit
 [black]: https://github.com/psf/black
 
+**Warning**: this code is very much a work in progress and is primarily being intended for a particular workflow. It may not work well (or at all) for your workflow.
+
 `hugit` is a command line tool for loading ImageFolder style datasets into a 🤗 `datasets` `Dataset` and pushing to the 🤗 hub.
 
 The primary goal of `hugit` is to help quickly get a local dataset into a format that can be used for training computer vision models. `hugit` was developed to support the workflow for [`flyswot`](https://github.com/davanstrien/flyswot/) where we wanted a quicker iteration between creating new training data, training a model, and using the new model inside [`flyswot`](https://github.com/davanstrien/flyswot/).
@@ -30,7 +32,7 @@ The primary goal of `hugit` is to help quickly get a local dataset into a format
 
 ## Supported formats
 
-At the moment ImageFolder style datasets i.e:
+At the moment **hugit** supports ImageFolder style datasets i.e:
 
 ```bash
 data/
@@ -51,7 +53,13 @@ data/
 
 ## Installation
 
-You can install _Hugit_ via [pip] from [PyPI], since it's a command-line application [`pipx`](https://pypa.github.io/pipx/) is highly recommended:
+You can install _Hugit_ via [pip] from [PyPI], inside a virtual environment install `hugit` using
+
+```console
+$ pip install hugit
+```
+
+Alternatively, you can use [pipx](https://pypa.github.io/pipx/) to install `hugit`
 
 ```console
 $ pipx install hugit
@@ -59,7 +67,7 @@ $ pipx install hugit
 
 ## Usage
 
-Please see the [Command-line Reference] for details.
+You can see help for `hugit` using `hugit --help`
 
 <!-- [[[cog
 import cog
@@ -76,22 +84,26 @@ cog.out(
 ```
 Usage: hugit [OPTIONS] COMMAND [ARGS]...
 
+  Hugit Command Line
+
 Options:
   --help  Show this message and exit.
 
 Commands:
-  load_image_dataset  Load an image dataset
+  push_image_dataset  Load an ImageFolder style dataset.
 
 ```
 
 <!-- [[[end]]] -->
+
+To load an ImageFolder style dataset onto the 🤗 Hub you can use the `push_image_dataset` command.
 
 <!-- [[[cog
 import cog
 from hugit import cli
 from click.testing import CliRunner
 runner = CliRunner()
-result = runner.invoke(cli.cli, ["load_image_dataset", "--help"])
+result = runner.invoke(cli.cli, ["push_image_dataset", "--help"])
 help = result.output.replace("Usage: cli", "Usage: hugit")
 cog.out(
     "```\n{}\n```".format(help)
@@ -99,28 +111,29 @@ cog.out(
 ]]] -->
 
 ```
-Usage: hugit load_image_dataset [OPTIONS] DIRECTORY
+Usage: hugit push_image_dataset [OPTIONS] DIRECTORY
 
-  Load an image dataset
+  Load an ImageFolder style dataset.
 
 Options:
-  --train-directory TEXT        Name of train directory
-  --valid-directory TEXT        name of valid directory
-  --test-directory TEXT         name of test directory
-  --repo-id TEXT                Repo id for the hub  [required]
-  --private / --no-private      Whether to keep dataset private  [default: True]
-  --do-resize / --no-do-resize  Whether to resize images before upload
-                                [default: True]
-
-  --size INTEGER                Size to resize image. This will be used on the
-                                shortest side of the image i.e. the aspect rato
-                                will be maintained  [default: 224]
-
-  --help                        Show this message and exit.
+  --repo-id TEXT                  Repo id for the Hugging Face Hub  [required]
+  --private / --no-private        Whether to keep dataset private on the Hub
+                                  [default: private]
+  --do-resize / --no-do-resize    Whether to resize images before upload
+                                  [default: do-resize]
+  --size INTEGER                  Size to resize image. This will be used on the
+                                  shortest side of the image i.e. the aspect
+                                  rato will be maintained  [default: 224]
+  --preserve-file-path / --no-preserve-file-path
+                                  preserve_orginal_file_path  [default:
+                                  preserve-file-path]
+  --help                          Show this message and exit.
 
 ```
 
 <!-- [[[end]]] -->
+
+Under the hood `hugit` uses [`typed-settings`](https://typed-settings.readthedocs.io/en/latest/index.html), which means that configuration can either be done through the command line or through a `TOML` file. See [usage] for more detailed discussion of how to use `hugit`.
 
 ## Contributing
 
@@ -151,3 +164,4 @@ This project was generated from [@cjolowicz]'s [Hypermodern Python Cookiecutter]
 <!-- github-only -->
 
 [contributor guide]: https://github.com/davanstrien/hugit/blob/main/CONTRIBUTING.md
+[usage]: https://hugit.readthedocs.io/en/latest/usage.html
