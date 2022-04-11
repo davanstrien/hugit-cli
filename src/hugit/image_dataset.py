@@ -37,7 +37,7 @@ def resize_image(image: Image, size: int = 224) -> Image:
         return image
 
 
-def filter_bad_images(x: dict[Any]) -> bool:
+def filter_bad_images(x: Any) -> bool:
     """Checks if pillow can open an image"""
     im = x["image"]["path"]
     print(im)
