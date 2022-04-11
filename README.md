@@ -59,7 +59,7 @@ You can install _Hugit_ via [pip] from [PyPI], inside a virtual environment inst
 $ pip install hugit
 ```
 
-Alternatively, you can use [pix](https://pypa.github.io/pipx/) to install `hugit`
+Alternatively, you can use [pipx](https://pypa.github.io/pipx/) to install `hugit`
 
 ```console
 $ pipx install hugit
