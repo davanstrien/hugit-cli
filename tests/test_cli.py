@@ -15,7 +15,7 @@ def test_main_cli() -> None:
     """Basic tests for Cli"""
     result = runner.invoke(cli)
     assert result.exit_code == 0
-    result = runner.invoke(cli, ["load_image_dataset"])
+    result = runner.invoke(cli, ["push_image_dataset"])
     assert result.exit_code == 2
-    result = runner.invoke(cli, ["load_image_dataset", "--help"])
+    result = runner.invoke(cli, ["push_image_dataset", "--help"])
     assert result.exit_code == 0
