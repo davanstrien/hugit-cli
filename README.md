@@ -22,6 +22,8 @@
 [pre-commit]: https://github.com/pre-commit/pre-commit
 [black]: https://github.com/psf/black
 
+**Warning**: this code is very much a work in progress and is primarily being intended for a particular workflow. It may not work well (or at all) for your workflow.
+
 `hugit` is a command line tool for loading ImageFolder style datasets into a 🤗 `datasets` `Dataset` and pushing to the 🤗 hub.
 
 The primary goal of `hugit` is to help quickly get a local dataset into a format that can be used for training computer vision models. `hugit` was developed to support the workflow for [`flyswot`](https://github.com/davanstrien/flyswot/) where we wanted a quicker iteration between creating new training data, training a model, and using the new model inside [`flyswot`](https://github.com/davanstrien/flyswot/).
