@@ -60,9 +60,9 @@ class ImageDataset:
     def from_image_directory(
         cls,
         directory: Path,
-        train_dir: Path | None = None,
-        valid_dir: Path | None = None,
-        test_dir: Path | None = None,
+        train_dir: str | Path | None = None,
+        valid_dir: str | Path | None = None,
+        test_dir: str | Path | None = None,
         check_for_corrupt_images: bool = True,
         preserve_file_path: bool = False,
     ):
