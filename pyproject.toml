@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hugit"
-version = "0.0.2"
+version = "0.0.3"
 description = "Hugit"
 authors = ["Daniel van Strien <daniel.van-strien@bl.uk>"]
 license = "MIT"
