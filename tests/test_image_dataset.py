@@ -53,6 +53,32 @@ def test_imagedataset(image_directory):
     assert not set(freqs.keys()).difference({"dog", "cat", "monkey"})
 
 
+@pytest.fixture()
+def image_directory_with_folder(tmp_path):
+    """Fixture for image directory."""
+    image_dir = tmp_path / "image_dir"
+    print(image_dir)
+    image_dir.mkdir()
+    for split in ["train", "test"]:
+        split_dir = image_dir / split
+        split_dir.mkdir()
+        for label in ["dog", "cat", "monkey"]:
+            label_dir = split_dir / label
+            label_dir.mkdir()
+            for fname in range(100):
+                file = label_dir / f"file_{fname}.jpg"
+                file.touch()
+    return image_dir
+
+
+def test_image_dataset_with_test(image_directory_with_folder):
+    """Tests imagedataset with test folder."""
+    dataset = image_dataset.ImageDataset.from_image_directory(
+        image_directory_with_folder, train_dir="train", test_dir="test"
+    )
+    assert dataset
+
+
 def create_image(w, h):
     """Create an image for testing"""
     data = np.zeros((h, w, 3), dtype=np.uint8)
