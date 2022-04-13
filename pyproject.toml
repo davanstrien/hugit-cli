@@ -5,8 +5,8 @@ description = "Hugit"
 authors = ["Daniel van Strien <daniel.van-strien@bl.uk>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://github.com/davanstrien/hugit"
-repository = "https://github.com/davanstrien/hugit"
+homepage = "https://github.com/davanstrien/hugit-cli"
+repository = "https://github.com/davanstrien/hugit-cli"
 documentation = "https://hugit.readthedocs.io"
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
