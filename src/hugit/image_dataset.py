@@ -139,7 +139,7 @@ class Settings:
         default=False, help="Whether to resize images before upload"
     )
     size: int = ts.option(
-        default=None,
+        default=224,
         help="""Size to resize image.
         This will be used on the shortest side of the image
         i.e. the aspect rato will be maintained""",
