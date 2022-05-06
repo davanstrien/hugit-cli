@@ -164,4 +164,4 @@ This project was generated from [@cjolowicz]'s [Hypermodern Python Cookiecutter]
 <!-- github-only -->
 
 [contributor guide]: https://github.com/davanstrien/hugit/blob/main/CONTRIBUTING.md
-[usage]: https://hugit.readthedocs.io/en/latest/usage.html
+[usage]: https://hugit-cli.readthedocs.io/en/latest/usage.html
