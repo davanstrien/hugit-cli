@@ -6,8 +6,8 @@
 [![License](https://img.shields.io/pypi/l/hugit)][license]
 
 [![Read the documentation at https://hugit.readthedocs.io/](https://img.shields.io/readthedocs/hugit/latest.svg?label=Read%20the%20Docs)][read the docs]
-[![Tests](https://github.com/davanstrien/hugit/workflows/Tests/badge.svg)][tests]
-[![Codecov](https://codecov.io/gh/davanstrien/hugit/branch/main/graph/badge.svg)][codecov]
+[![Tests](https://github.com/davanstrien/hugit-cli/workflows/Tests/badge.svg)][tests]
+[![Codecov](https://codecov.io/gh/davanstrien/hugit-cli/branch/main/graph/badge.svg)][codecov]
 
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)][pre-commit]
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg)][black]
