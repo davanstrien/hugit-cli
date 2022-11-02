@@ -58,13 +58,13 @@ class ImageDataset:
 
     @classmethod
     def from_image_directory(
-            cls,
-            directory: Path,
-            train_dir: str | Path | None = None,
-            valid_dir: str | Path | None = None,
-            test_dir: str | Path | None = None,
-            check_for_corrupt_images: bool = True,
-            preserve_file_path: bool = False,
+        cls,
+        directory: Path,
+        train_dir: str | Path | None = None,
+        valid_dir: str | Path | None = None,
+        test_dir: str | Path | None = None,
+        check_for_corrupt_images: bool = True,
+        preserve_file_path: bool = False,
     ):
         """Initialize an ImageDataset from a ImageFolder style dataset."""
         data_files = {}
