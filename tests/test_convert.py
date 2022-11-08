@@ -5,13 +5,10 @@
 import pathlib
 
 
-from pathlib import Path
-import numpy as np
 import pytest
 from PIL import Image
-import PIL
+
 from hugit import convert
-from PIL import Image
 
 
 Image.init()
@@ -37,6 +34,7 @@ def image_directory(tmp_path):
 
 
 def test_search_images(image_directory):
+    """Test image search returns paths"""
     images = list(convert.search_for_images(image_directory))
     assert images
     assert isinstance(images[0], pathlib.Path)

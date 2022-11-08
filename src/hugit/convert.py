@@ -1,14 +1,14 @@
+"""Convert images."""
 from __future__ import annotations
-from pathlib import Path
-from typing import List, Iterator
 
+from pathlib import Path
+from typing import Iterator
+
+import click
 from PIL import Image
 from PIL import UnidentifiedImageError
-import click
-import datasets
-import typed_settings as ts
-from attrs import define
 from rich.progress import track
+
 
 Image.init()
 IMAGE_EXTENSIONS = [
@@ -18,8 +18,9 @@ IMAGE_EXTENSIONS = [
 ]
 
 
-def search_for_images(path: Path) -> Iterator[Path]:
-    files = Path(path).rglob("*")
+def search_for_images(directory: Path) -> Iterator[Path]:
+    """Yields image files from directory"""
+    files = Path(directory).rglob("*")
     for file in files:
         print(file)
         if file.suffix.strip(".") in IMAGE_EXTENSIONS:
@@ -29,6 +30,7 @@ def search_for_images(path: Path) -> Iterator[Path]:
 
 
 def convert_image(image_file: Path, save_format=".jpeg") -> None:  # pragma: no cover
+    """Convert `image_file` to `save_format`"""
     try:
         out_filename = image_file.with_suffix(save_format)
         image = Image.open(image_file)
@@ -46,6 +48,8 @@ def convert_image(image_file: Path, save_format=".jpeg") -> None:  # pragma: no 
 )
 @click.argument("save_format", type=click.STRING)
 def convert_format(save_format, directory) -> None:
+    """Convert images in directory to `save_format`"""
+    image_files = search_for_images(directory)
     image_files = search_for_images(directory)
     for file in track(list(image_files)):
         convert_image(file)
