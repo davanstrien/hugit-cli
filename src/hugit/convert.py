@@ -27,7 +27,7 @@ def search_for_images(path: Path) -> Iterator[Path]:
             continue
 
 
-def convert_image(image_file: Path, save_format=".jpeg") -> None: # pragma: no cover
+def convert_image(image_file: Path, save_format=".jpeg") -> None:  # pragma: no cover
     try:
         out_filename = image_file.with_suffix(save_format)
         image = Image.open(image_file)
@@ -41,7 +41,7 @@ def convert_image(image_file: Path, save_format=".jpeg") -> None: # pragma: no c
 @click.command(name="convert_images")
 @click.argument(
     "directory",
-    type=click.Path(exists=True, dir_okay=True, readable=True, resolve_path=True)
+    type=click.Path(exists=True, dir_okay=True, readable=True, resolve_path=True),
 )
 @click.argument("save_format", type=click.STRING)
 def convert_format(save_format, directory) -> None:
