@@ -80,7 +80,6 @@ cog.out(
     "```\n{}\n```".format(help)
 )
 ]]] -->
-
 ```
 Usage: hugit [OPTIONS] COMMAND [ARGS]...
 
@@ -90,10 +89,10 @@ Options:
   --help  Show this message and exit.
 
 Commands:
+  convert_images      Convert images in directory to `save_format`
   push_image_dataset  Load an ImageFolder style dataset.
 
 ```
-
 <!-- [[[end]]] -->
 
 To load an ImageFolder style dataset onto the 🤗 Hub you can use the `push_image_dataset` command.
@@ -109,7 +108,6 @@ cog.out(
     "```\n{}\n```".format(help)
 )
 ]]] -->
-
 ```
 Usage: hugit push_image_dataset [OPTIONS] DIRECTORY
 
@@ -130,7 +128,6 @@ Options:
   --help                          Show this message and exit.
 
 ```
-
 <!-- [[[end]]] -->
 
 Under the hood `hugit` uses [`typed-settings`](https://typed-settings.readthedocs.io/en/latest/index.html), which means that configuration can either be done through the command line or through a `TOML` file. See [usage] for more detailed discussion of how to use `hugit`.
