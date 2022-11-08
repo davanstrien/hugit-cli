@@ -1,6 +1,7 @@
 """Command-line interface."""
 import click
 
+from hugit import convert
 from hugit import image_dataset
 
 
@@ -11,6 +12,7 @@ def cli():
 
 
 cli.add_command(image_dataset.load_image_dataset)
+cli.add_command(convert.convert_format)
 
 if __name__ == "__main__":
     cli()  # pragma: no cover
