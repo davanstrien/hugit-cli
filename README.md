@@ -90,6 +90,7 @@ Options:
   --help  Show this message and exit.
 
 Commands:
+  convert_images      Convert images in directory to `save_format`
   push_image_dataset  Load an ImageFolder style dataset.
 
 ```
