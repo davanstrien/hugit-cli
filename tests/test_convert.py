@@ -4,7 +4,6 @@
 
 import pathlib
 
-
 import pytest
 from PIL import Image
 
