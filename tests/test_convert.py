@@ -1,4 +1,5 @@
 """Tests for convert module."""
+
 # mypy: allow-untyped-defs
 
 import pathlib
@@ -13,11 +14,12 @@ from hugit import convert
 from PIL import Image
 
 
-IMAGE_EXTENSIONS = []
 Image.init()
-for ext, image_format in Image.EXTENSION.items():
-    if image_format in Image.OPEN:
-        IMAGE_EXTENSIONS.append(ext[1:])
+IMAGE_EXTENSIONS = [
+    ext[1:]
+    for ext, image_format in Image.EXTENSION.items()
+    if image_format in Image.OPEN
+]
 
 
 @pytest.fixture()
