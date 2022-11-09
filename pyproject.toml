@@ -25,6 +25,7 @@ typed-settings = "^1.0.0"
 datasets = "^2.0.0"
 click = "^8.1.0"
 attrs = "^22.1.0"
+rich-click = "^1.5.2"
 
 [tool.poetry.dev-dependencies]
 Pygments = ">=2.10.0"

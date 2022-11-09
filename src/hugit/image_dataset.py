@@ -4,7 +4,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-import click
+import rich_click as click
 import datasets
 import typed_settings as ts
 from attrs import define
