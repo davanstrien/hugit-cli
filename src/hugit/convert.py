@@ -4,7 +4,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Iterator
 
-import click
+import rich_click as click
 from PIL import Image
 from PIL import UnidentifiedImageError
 from rich.progress import track
@@ -44,12 +44,16 @@ def convert_image(image_file: Path, save_format=".jpeg") -> None:  # pragma: no 
 @click.command(name="convert_images")
 @click.argument(
     "directory",
-    type=click.Path(exists=True, dir_okay=True, readable=True, resolve_path=True),
+    type=click.Path(
+        exists=True,
+        dir_okay=True,
+        readable=True,
+        resolve_path=True,
+    ),
 )
 @click.argument("save_format", type=click.STRING)
 def convert_format(save_format, directory) -> None:
     """Convert images in directory to `save_format`"""
-    image_files = search_for_images(directory)
     image_files = search_for_images(directory)
     for file in track(list(image_files)):
         convert_image(file)

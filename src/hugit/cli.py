@@ -1,5 +1,5 @@
 """Command-line interface."""
-import click
+import rich_click as click
 
 from hugit import convert
 from hugit import image_dataset
