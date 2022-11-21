@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, Union
+from typing import Any
 
 import datasets
 import rich_click as click
@@ -15,7 +15,6 @@ from PIL import Image
 from PIL import UnidentifiedImageError
 from PIL.Image import ANTIALIAS
 from toolz import itertoolz
-from datasets import Dataset
 from hugit import core
 
 
