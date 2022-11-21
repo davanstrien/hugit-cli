@@ -22,7 +22,6 @@ def search_for_images(directory: Path) -> Iterator[Path]:
     """Yields image files from directory"""
     files = Path(directory).rglob("*")
     for file in files:
-        print(file)
         if file.suffix.strip(".") in IMAGE_EXTENSIONS:
             yield file
         else:
@@ -38,6 +37,8 @@ def convert_image(image_file: Path, save_format=".jpeg") -> None:  # pragma: no 
         image.save(out_filename)
         image_file.unlink()
     except UnidentifiedImageError:
+        image_file.unlink()
+    except OSError:
         image_file.unlink()
 
 
@@ -56,4 +57,5 @@ def convert_format(save_format, directory) -> None:
     """Convert images in directory to `save_format`"""
     image_files = search_for_images(directory)
     for file in track(list(image_files)):
-        convert_image(file)
+        if file.suffix != save_format:
+            convert_image(file)
