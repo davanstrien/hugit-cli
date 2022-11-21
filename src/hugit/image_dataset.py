@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
+from typing import Any, Union
 
 import datasets
 import rich_click as click
@@ -10,11 +10,12 @@ import typed_settings as ts
 from attrs import define
 from datasets import load_dataset
 from datasets.dataset_dict import DatasetDict
+from loguru import logger
 from PIL import Image
 from PIL import UnidentifiedImageError
 from PIL.Image import ANTIALIAS
 from toolz import itertoolz
-
+from datasets import Dataset
 from hugit import core
 
 
@@ -57,6 +58,7 @@ class ImageDataset:
     id2label: dict[str, dict[int, str]]
 
     @classmethod
+    @logger.catch
     def from_image_directory(
         cls,
         directory: Path,
@@ -79,10 +81,16 @@ class ImageDataset:
             data_files["test"] = f"{test_files}/**/*"
         # if (train_dir and valid_dir and test_dir) is None:
         #     data_files["train"] = f"{directory}"
-        if data_files:
-            ds = load_dataset("imagefolder", data_files=data_files)
+
+        if not data_files:
+            ds = load_dataset(
+
+                "imagefolder", data_dir=str(directory), ignore_verifications=True
+            )
         else:
-            ds = load_dataset("imagefolder", data_dir=str(directory))
+            ds = load_dataset(
+                "imagefolder", data_files=data_files, ignore_verifications=True
+            )
         if isinstance(ds, DatasetDict):
             id2labels = {}
             label2ids = {}
@@ -97,7 +105,6 @@ class ImageDataset:
                 ds = ds.cast_column("image", datasets.Image())
             if preserve_file_path:
                 ds = ds.map(lambda example: {"fpath": example["image"].filename})
-
             return cls(ds, label2ids, id2labels)
 
     @property
@@ -115,7 +122,7 @@ class ImageDataset:
     def resize_images(self, size=448, writer_batch_size=8):
         """Resizes images to `size` with `writer_batch_size`."""
         self.dataset = self.dataset.map(
-            lambda example: {"image": resize_image(example["image"])},
+            lambda example: {"image": resize_image(example["image"], size=size)},
             writer_batch_size=writer_batch_size,
             num_proc=4,
         )
@@ -142,10 +149,14 @@ class Settings:
         default=224,
         help="""Size to resize image.
         This will be used on the shortest side of the image
-        i.e. the aspect rato will be maintained""",
+        i.e. the aspect ratio will be maintained""",
     )
     preserve_file_path: bool = ts.option(
-        default=True, help="preserve_orginal_file_path"
+        default=True, help="preserve original file path"
+    )
+    ignore_verifications: bool = ts.option(
+        default=True,
+        help="Whether to perform verifications on the file before loading into dataset",
     )
 
 
@@ -165,15 +176,9 @@ class Settings:
 )
 def load_image_dataset(settings, directory) -> None:
     """Load an ImageFolder style dataset."""
-    print(settings)
-    # if settings.train_directory == "None":
-    #     train_directory = None
-    # else:
-    #     train_directory = settings.train_directory
-    train_directory = None
     dataset = ImageDataset.from_image_directory(
         directory,
-        train_dir=train_directory,
+        train_dir=None,  # TODO deal with train test splits
         test_dir=None,
         valid_dir=None,
         preserve_file_path=True,
