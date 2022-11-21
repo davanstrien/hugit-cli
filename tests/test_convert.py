@@ -3,12 +3,20 @@
 # mypy: allow-untyped-defs
 
 import pathlib
+from pathlib import Path
 
 import pytest
+from click.testing import CliRunner
 from PIL import Image
 
 from hugit import convert
+from hugit.cli import cli
 
+
+# flake8: noqa
+# mypy: allow-untyped-defs
+
+runner = CliRunner()
 
 Image.init()
 IMAGE_EXTENSIONS = [
@@ -38,3 +46,14 @@ def test_search_images(image_directory):
     assert images
     assert isinstance(images[0], pathlib.Path)
     assert len(images) == 30
+
+
+runner = CliRunner()
+
+
+def test_convert_format(image_directory):
+    """Test convert format"""
+    result = runner.invoke(convert.convert_format, ["--help"])
+    assert result.exit_code == 0
+    assert image_directory
+    runner.invoke(convert.convert_format, ["convert_images", image_directory, ".jpeg"])
