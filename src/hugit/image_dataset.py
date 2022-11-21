@@ -82,14 +82,16 @@ class ImageDataset:
         # if (train_dir and valid_dir and test_dir) is None:
         #     data_files["train"] = f"{directory}"
 
-        if not data_files:
-            ds = load_dataset(
-                "imagefolder", data_dir=str(directory), ignore_verifications=True
-            )
-        else:
-            ds = load_dataset(
+        ds = (
+            load_dataset(
                 "imagefolder", data_files=data_files, ignore_verifications=True
             )
+            if data_files
+            else load_dataset(
+                "imagefolder", data_dir=str(directory), ignore_verifications=True
+            )
+        )
+
         if isinstance(ds, DatasetDict):
             id2labels = {}
             label2ids = {}
