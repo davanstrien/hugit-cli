@@ -26,6 +26,7 @@ datasets = "^2.0.0"
 click = "^8.1.0"
 attrs = "^22.1.0"
 rich-click = "^1.5.2"
+loguru = "^0.6.0"
 
 [tool.poetry.dev-dependencies]
 Pygments = ">=2.10.0"
