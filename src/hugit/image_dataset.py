@@ -15,6 +15,7 @@ from PIL import Image
 from PIL import UnidentifiedImageError
 from PIL.Image import ANTIALIAS
 from toolz import itertoolz
+
 from hugit import core
 
 
@@ -83,7 +84,6 @@ class ImageDataset:
 
         if not data_files:
             ds = load_dataset(
-
                 "imagefolder", data_dir=str(directory), ignore_verifications=True
             )
         else:
