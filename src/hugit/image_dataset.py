@@ -10,6 +10,7 @@ import typed_settings as ts
 from attrs import define
 from datasets import load_dataset
 from datasets.dataset_dict import DatasetDict
+from huggingface_hub import login
 from loguru import logger
 from PIL import Image
 from PIL import UnidentifiedImageError
@@ -159,6 +160,7 @@ class Settings:
         default=True,
         help="Whether to perform verifications on the file before loading into dataset",
     )
+    huggingface_hub_token: str = ts.secret(default=None, help="Hugging Face Hub authentication token")
 
 
 @click.command(name="push_image_dataset")
@@ -171,12 +173,14 @@ class Settings:
     ts.default_loaders(
         appname="load_image_dataset",
         config_files=[ts.find("project.toml")],
-        config_file_section="tool.huggit",
+        config_file_section="tool.hugit",
         env_prefix=None,
     ),
 )
 def load_image_dataset(settings, directory) -> None:
     """Load an ImageFolder style dataset."""
+    if settings.huggingface_hub_token is not None:  # pragma: no cover
+        login(settings.huggingface_hub_token)
     dataset = ImageDataset.from_image_directory(
         directory,
         train_dir=None,  # TODO deal with train test splits

@@ -80,21 +80,22 @@ cog.out(
     "```\n{}\n```".format(help)
 )
 ]]] -->
+```
+                                                                                                                                                                            
+ Usage: hugit [OPTIONS] COMMAND [ARGS]...                                                                                                                                     
+                                                                                                                                                                            
+ Hugit Command Line                                                                                                                                                         
+                                                                                                                                                                            
+╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --help      Show this message and exit.                                                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Commands ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ convert_images                                     Convert images in directory to `save_format`                                                                          │
+│ push_image_dataset                                 Load an ImageFolder style dataset.                                                                                    │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
 
 ```
-Usage: hugit [OPTIONS] COMMAND [ARGS]...
-
-  Hugit Command Line
-
-Options:
-  --help  Show this message and exit.
-
-Commands:
-  convert_images      Convert images in directory to `save_format`
-  push_image_dataset  Load an ImageFolder style dataset.
-
-```
-
 <!-- [[[end]]] -->
 
 To load an ImageFolder style dataset onto the 🤗 Hub you can use the `push_image_dataset` command.
@@ -110,28 +111,27 @@ cog.out(
     "```\n{}\n```".format(help)
 )
 ]]] -->
+```
+                                                                                                                                                                            
+ Usage: hugit push_image_dataset [OPTIONS] DIRECTORY                                                                                                                          
+                                                                                                                                                                            
+ Load an ImageFolder style dataset.                                                                                                                                         
+                                                                                                                                                                            
+╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *  --repo-id                                           TEXT     Repo id for the Hugging Face Hub [required]                                                              │
+│    --private/--no-private                                       Whether to keep dataset private on the Hub [default: private]                                            │
+│    --do-resize/--no-do-resize                                   Whether to resize images before upload [default: no-do-resize]                                           │
+│    --size                                              INTEGER  Size to resize image. This will be used on the shortest side of the image i.e. the aspect ratio will be  │
+│                                                                 maintained                                                                                               │
+│                                                                 [default: 224]                                                                                           │
+│    --preserve-file-path/--no-preserve-file-path                 preserve original file path [default: preserve-file-path]                                                │
+│    --ignore-verifications/--no-ignore-verifications             Whether to perform verifications on the file before loading into dataset [default: ignore-verifications] │
+│    --huggingface-hub-token                             TEXT     Hugging Face Hub authentication token  [default: ***]                                                    │
+│    --help                                                       Show this message and exit.                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
 
 ```
-Usage: hugit push_image_dataset [OPTIONS] DIRECTORY
-
-  Load an ImageFolder style dataset.
-
-Options:
-  --repo-id TEXT                  Repo id for the Hugging Face Hub  [required]
-  --private / --no-private        Whether to keep dataset private on the Hub
-                                  [default: private]
-  --do-resize / --no-do-resize    Whether to resize images before upload
-                                  [default: do-resize]
-  --size INTEGER                  Size to resize image. This will be used on the
-                                  shortest side of the image i.e. the aspect
-                                  rato will be maintained  [default: 224]
-  --preserve-file-path / --no-preserve-file-path
-                                  preserve_orginal_file_path  [default:
-                                  preserve-file-path]
-  --help                          Show this message and exit.
-
-```
-
 <!-- [[[end]]] -->
 
 Under the hood `hugit` uses [`typed-settings`](https://typed-settings.readthedocs.io/en/latest/index.html), which means that configuration can either be done through the command line or through a `TOML` file. See [usage] for more detailed discussion of how to use `hugit`.
