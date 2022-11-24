@@ -160,7 +160,9 @@ class Settings:
         default=True,
         help="Whether to perform verifications on the file before loading into dataset",
     )
-    huggingface_hub_token: str = ts.secret(default=None, help="Hugging Face Hub authentication token")
+    huggingface_hub_token: str = ts.secret(
+        default=None, help="Hugging Face Hub authentication token"
+    )
 
 
 @click.command(name="push_image_dataset")
