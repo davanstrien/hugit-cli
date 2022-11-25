@@ -17,7 +17,6 @@ from PIL import UnidentifiedImageError
 from PIL.Image import ANTIALIAS
 from toolz import itertoolz
 
-from hugit import core
 
 
 def resize_image(image: Image, size: int = 224) -> Image:
