@@ -18,7 +18,6 @@ from PIL.Image import ANTIALIAS
 from toolz import itertoolz
 
 
-
 def resize_image(image: Image, size: int = 224) -> Image:
     """Resizes an image retaining the aspect ratio."""
     w, h = image.size
