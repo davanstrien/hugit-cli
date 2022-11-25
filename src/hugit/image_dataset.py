@@ -42,7 +42,6 @@ def resize_image(image: Image, size: int = 224) -> Image:
 def filter_bad_images(x: Any) -> bool:
     """Checks if pillow can open an image"""
     im = x["image"]["path"]
-    print(im)
     try:
         Image.open(im)
         return True
@@ -190,10 +189,10 @@ def load_image_dataset(settings, directory) -> None:
         valid_dir=None,
         preserve_file_path=True,
     )
-    label_freqs = dataset.label_frequencies
-    for split_name, label_freq in label_freqs.items():
-        print(split_name)
-        core.print_table_from_frequency_dict(frequency_dict=label_freq)
+    # label_freqs = dataset.label_frequencies
+    # for split_name, label_freq in label_freqs.items():
+    #     print(split_name)
+    #     core.print_table_from_frequency_dict(frequency_dict=label_freq)
     if settings.do_resize:
         print("resizing")
         dataset.resize_images(size=settings.size)
